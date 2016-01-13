@@ -20,21 +20,22 @@ var watch = require('node-watch'),
     })
     .on('end', function(){
         console.log('converted');
-    })
-    .saveToFile(path + '/' + user + '/webm/' + file + '.webm');
-    
-    tripleDES.open('cgThUA3LGnPQCFNSPEQkaAB9');
 
-    fs.readFile(path + '/' + user + '/webm/' + file + '.webm', function(err, data)
-    {
-        if(err)
-            winston.log('info', err);
+        tripleDES.open('cgThUA3LGnPQCFNSPEQkaAB9');
 
-        var encrypted = tripleDES.encrypt(data);
-
-        fs.writeFile(path + '/' + user + '/temp/' + file + '.webm', encrypted, function(err, data)
+        fs.readFile(path + '/' + user + '/webm/' + file + '.webm', function(err, data)
         {
             if(err)
                 winston.log('info', err);
+
+            var encrypted = tripleDES.encrypt(data);
+
+            fs.writeFile(path + '/' + user + '/temp/' + file + '.webm', encrypted, function(err, data)
+            {
+                if(err)
+                    winston.log('info', err);
+            });
         });
-    });
+    })
+    .saveToFile(path + '/' + user + '/webm/' + file + '.webm');
+    
