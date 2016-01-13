@@ -41,5 +41,5 @@ var watch = require('node-watch'),
             });
         });
     })
-    .output(path + '/' + user + '/webm/' + file + '.webm.tmp');
+    .saveToFile(path + '/' + user + '/webm/' + file + '.webm.tmp');
     
