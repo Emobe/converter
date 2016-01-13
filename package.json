@@ -1,0 +1,18 @@
+{
+  "name": "converter",
+  "version": "1.0.0",
+  "description": "convert videos to webm and watch for new videos",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anthony Shuker",
+  "license": "ISC",
+  "dependencies": {
+    "fluent-ffmpeg": "^2.0.1",
+    "mcrypt": "^0.1.9",
+    "node-watch": "^0.3.4",
+    "watch": "^0.16.0",
+    "winston": "^2.1.1"
+  }
+}
