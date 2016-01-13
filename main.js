@@ -19,7 +19,7 @@ var watch = require('node-watch'),
         console.log(err);
     })
     .on('end', function(){
-        console.log('converted');
+        process.stdout.write('converted');
 
         tripleDES.open('cgThUA3LGnPQCFNSPEQkaAB9');
 
@@ -33,7 +33,9 @@ var watch = require('node-watch'),
             fs.writeFile(path + '/' + user + '/webm/' + file + '.webm', encrypted, function(err, data)
             {
                 if(err)
-                    winston.log('info', err);
+                    process.stderr.write(err);
+                else
+                    process.stdout.write('encrypted');
 
                 fs.unlinkSync(path + '/' + user + '/webm/' + file + '.webm.tmp');
             });
