@@ -23,19 +23,21 @@ var watch = require('node-watch'),
 
         tripleDES.open('cgThUA3LGnPQCFNSPEQkaAB9');
 
-        fs.readFile(path + '/' + user + '/webm/' + file + '.webm', function(err, data)
+        fs.readFile(path + '/' + user + '/webm/' + file + '.webm.tmp', function(err, data)
         {
             if(err)
                 winston.log('info', err);
 
             var encrypted = tripleDES.encrypt(data);
 
-            fs.writeFile(path + '/' + user + '/temp/' + file + '.webm', encrypted, function(err, data)
+            fs.writeFile(path + '/' + user + '/webm/' + file + '.webm', encrypted, function(err, data)
             {
                 if(err)
                     winston.log('info', err);
+
+                fs.unlinkSync(path + '/' + user + '/webm/' + file + '.webm.tmp');
             });
         });
     })
-    .saveToFile(path + '/' + user + '/webm/' + file + '.webm');
+    .output(path + '/' + user + '/webm/' + file + '.webm.tmp');
     
