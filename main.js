@@ -7,13 +7,16 @@ var watch = require('node-watch'),
     path = __dirname + '/../data',
     args = process.argv.slice(2),
     file = args[0],
-    user = args[1];
+    user = args[1],
+    type = args[2];
 
+f = new ffmpeg({
+    source: path + '/temp/' + file
+});
 
-    new ffmpeg({
-        source: path + '/temp/' + file
-    })
-    .withVideoCodec('libvpx')
+if(type === "video")
+{
+    f.withVideoCodec('libvpx')
     .toFormat('webm')
     .on('error', function(err, stdout, stderr){
         console.log(err);
@@ -42,4 +45,36 @@ var watch = require('node-watch'),
         });
     })
     .saveToFile(path + '/' + user + '/webm/' + file + '.webm.tmp');
-    
+}
+else if(type === "audio")
+{
+    f.withAudioCodec('libmp3lame')
+    .toFormat('mp3')
+    .on('error', function(err, stdout, stderr){
+        process.stderr.write(err);
+    })
+    .on('end', function(){
+        process.stdout.write('converted');
+
+        tripleDES.open('cgThUA3LGnPQCFNSPEQkaAB9');
+
+        fs.readFile(path + '/' + user + '/audio/' + file + '.mp3.tmp', function(err, data)
+        {
+            if(err)
+                winston.log('info', err);
+
+            var encrypted = tripleDES.encrypt(data);
+
+            fs.writeFile(path + '/' + user + '/audio/' + file + '.mp3', encrypted, function(err, data)
+            {
+                if(err)
+                    process.stderr.write(err);
+                else
+                    process.stdout.write('encrypted');
+
+                fs.unlinkSync(path + '/' + user + '/audio/' + file + '.mp3.tmp');
+            });
+        });
+    })
+    .saveToFile(path + '/' + user + '/audio/' + file + '.mp3.tmp');
+}
